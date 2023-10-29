@@ -1,0 +1,57 @@
+import java.util.Arrays;
+
+public class BubAndMerge<T extends Comparable<T>> {
+    public void bubbleSort(T[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j].compareTo(arr[j + 1]) > 0) {
+                    T temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public void mergeSort(T[] arr) {
+        if (arr.length > 1) {
+            int mid = arr.length / 2;
+            T[] left = Arrays.copyOfRange(arr, 0, mid);
+            T[] right = Arrays.copyOfRange(arr, mid, arr.length);
+
+            mergeSort(left);
+            mergeSort(right);
+
+            int i = 0, j = 0, k = 0;
+            while (i < left.length && j < right.length) {
+                if (left[i].compareTo(right[j]) <= 0) {
+                    arr[k++] = left[i++];
+                } else {
+                    arr[k++] = right[j++];
+                }
+            }
+
+            while (i < left.length) {
+                arr[k++] = left[i++];
+            }
+
+            while (j < right.length) {
+                arr[k++] = right[j++];
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage of the sorting algorithms
+        Integer[] intArray = {5, 2, 9, 3, 4, 1, 8};
+        SortingAlgorithms<Integer> sorter = new SortingAlgorithms<>();
+
+        sorter.bubbleSort(intArray);
+        System.out.println("Bubble Sorted Array: " + Arrays.toString(intArray));
+
+        Integer[] intArray2 = {5, 2, 9, 3, 4, 1, 8};
+        sorter.mergeSort(intArray2);
+        System.out.println("Merge Sorted Array: " + Arrays.toString(intArray2));
+    }
+}
